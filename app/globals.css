@@ -1,11 +1,19 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/geist-latin.woff2") format("woff2");
+}
+
 :root {
   --ink: #201d1b;
   --cream: #f4eee5;
   --paper: #fbf8f3;
-  --rose: #ae6255;
-  --rose-dark: #8f4b41;
+  --rose: #a9584c;
+  --rose-dark: #85433a;
   --sand: #d8c8b4;
   --line: rgba(32, 29, 27, 0.18);
 }
@@ -16,13 +24,32 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-sans), Arial, sans-serif;
+  font-family: "Geist", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; }
 button, a { -webkit-tap-highlight-color: transparent; }
 ::selection { background: var(--rose); color: white; }
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 14px;
+  left: 14px;
+  padding: 12px 16px;
+  background: var(--ink);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  transform: translateY(-160%);
+  transition: transform .2s ease;
+}
+.skip-link:focus { transform: translateY(0); }
+:focus-visible { outline: 3px solid white; outline-offset: 3px; box-shadow: 0 0 0 5px var(--ink); }
+main:focus { outline: none; }
+.section { scroll-margin-top: 20px; }
 
 .site-header {
   height: 94px;
@@ -112,7 +139,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .portfolio { background: var(--ink); color: #f6eee6; position: relative; }
 .portfolio-title { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 70px; }
 .eyebrow-light { color: #e5cfc4; }
-.portfolio h2 em, .booking h2 em { color: #d69284; }
+.portfolio h2 em { color: #d69284; }
+.booking h2 em { color: #f7ded8; }
 .work-grid { display: grid; grid-template-columns: 1.12fr .88fr; grid-template-rows: 260px 350px; gap: 18px; }
 .work-grid figure { position: relative; margin: 0; overflow: hidden; background: #382f2b; }
 .work-grid img { object-fit: cover; filter: saturate(.72) contrast(.96); transition: transform .6s ease, filter .6s ease; }
@@ -121,7 +149,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .work-tall { grid-row: 1 / 3; }
 .work-wide { grid-column: 2; }
 .work-two img { object-position: center 42%; }
-.work-three, .work-four { display: none; }
+.work-three { display: block; grid-column: 2; }
 .instagram-link { display: flex; justify-content: flex-end; gap: 16px; margin-top: 28px; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: #e8d8cf; }
 
 .experience { display: grid; grid-template-columns: 1fr 1fr; gap: 9vw; align-items: center; background: var(--paper); }
@@ -135,8 +163,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .experience-copy li { display: flex; align-items: center; gap: 24px; padding: 21px 0; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: .04em; }
 .experience-copy li span { color: var(--rose); font-family: Georgia, serif; }
 
+.faq { display: grid; grid-template-columns: .85fr 1.15fr; gap: 10vw; background: var(--cream); }
+.faq-intro > p:last-child { max-width: 470px; margin: 32px 0 0; font-family: Georgia, serif; color: #5f5650; font-size: 18px; line-height: 1.7; }
+.faq-list { border-top: 1px solid var(--line); }
+.faq-list details { border-bottom: 1px solid var(--line); }
+.faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 0; cursor: pointer; list-style: none; font-family: Georgia, serif; font-size: 23px; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list details > p { max-width: 660px; margin: -5px 48px 28px 0; color: #5d554f; font-size: 14px; line-height: 1.75; }
+.faq-icon { display: grid; flex: 0 0 auto; width: 34px; height: 34px; place-items: center; border: 1px solid var(--line); border-radius: 50%; font-family: "Geist", sans-serif; font-size: 18px; transition: transform .2s ease, background .2s ease, color .2s ease; }
+.faq-list details[open] .faq-icon { transform: rotate(45deg); background: var(--ink); color: white; }
+
 .booking { display: grid; grid-template-columns: 1.05fr .95fr; gap: 9vw; align-items: center; background: var(--rose); color: white; }
-.booking-copy > p:not(.eyebrow) { max-width: 520px; margin: 30px 0 36px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #f2ded9; }
+.booking .eyebrow-light { color: white; }
+.booking-copy > p:not(.eyebrow) { max-width: 520px; margin: 30px 0 36px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: white; }
 .button-light { background: white; color: var(--ink); }
 .button-light:hover { background: var(--cream); }
 .booking-card { background: #f6eee6; color: var(--ink); padding: 46px; box-shadow: 20px 20px 0 rgba(91,44,36,.24); }
@@ -152,7 +191,7 @@ footer { min-height: 260px; display: grid; grid-template-columns: 1fr 1fr; align
 .footer-brand span { font-size: 44px; }
 .footer-links { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 28px; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; }
 footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font-size: 13px; }
-.copyright { text-align: right; font-family: var(--font-sans), sans-serif; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.copyright { text-align: right; font-family: "Geist", sans-serif; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
 .mobile-book { display: none; }
 
 @media (max-width: 900px) {
@@ -166,7 +205,7 @@ footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font
   .section-heading { grid-template-columns: 1fr; gap: 36px; }
   .service-card { grid-template-columns: 52px 1fr; }
   .service-meta { grid-column: 2; }
-  .experience, .booking { grid-template-columns: 1fr; }
+  .experience, .faq, .booking { grid-template-columns: 1fr; }
   .experience-image { min-height: 600px; }
   .experience-copy { padding-top: 20px; }
   .booking-card { max-width: 650px; }
@@ -194,13 +233,11 @@ footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font
   .service-meta { grid-column: 2; gap: 15px; }
   .pricing-note { text-align: left; line-height: 1.5; }
   .portfolio-title { align-items: flex-start; flex-direction: column; gap: 18px; }
-  .work-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 410px 220px 220px; }
-  .work-tall { grid-column: 1 / 3; grid-row: 1; }
-  .work-wide { grid-column: 1 / 3; grid-row: 2; }
+  .work-grid { grid-template-columns: 1fr; grid-template-rows: 410px 220px 300px; }
+  .work-tall { grid-column: 1; grid-row: 1; }
+  .work-wide { grid-column: 1; grid-row: 2; }
   .work-small { display: block; grid-row: 3; }
   .work-three { grid-column: 1; }
-  .work-four { grid-column: 2; }
-  .work-four img { object-position: 67% center; }
   .experience-image { min-height: 490px; }
   .image-stamp { right: -5px; bottom: 30px; width: 96px; height: 96px; font-size: 7px; }
   .booking-card { padding: 30px 24px; box-shadow: 11px 11px 0 rgba(91,44,36,.24); }

@@ -33,13 +33,57 @@ const work = [
   { src: "/lash-closeup.jpg", alt: "Detalle de pestañas largas y definidas", className: "work-tall work-one" },
   { src: "/lash-application.jpg", alt: "Aplicación profesional de extensiones de pestañas", className: "work-wide work-two" },
   { src: "/lash-detail.jpg", alt: "Primer plano de una mirada con pestañas", className: "work-small work-three" },
-  { src: "/lash-closeup.jpg", alt: "Acabado elegante de extensiones de pestañas", className: "work-small work-four" },
 ];
+
+const faqs = [
+  {
+    question: "¿Qué estilo debo elegir?",
+    answer: "No necesitas decidirlo sola. Al consultar tu cita, cuéntame el resultado que buscas y revisamos qué opción se adapta mejor a tu mirada y a tus pestañas naturales.",
+  },
+  {
+    question: "¿Cuánto tiempo dura la cita?",
+    answer: "La duración aproximada va desde 1 h 15 min para algunos retoques hasta 2 h 30 min para un set de volumen. El tiempo exacto depende del servicio y del diseño.",
+  },
+  {
+    question: "¿Cómo debo llegar a mi cita?",
+    answer: "Ven sin máscara de pestañas y con el área de los ojos limpia. Así podremos dedicar el tiempo de la cita directamente al diseño y la aplicación.",
+  },
+  {
+    question: "¿Cómo confirmo precio y disponibilidad?",
+    answer: "Escríbeme por Instagram indicando el servicio que te interesa y tus días preferidos. Te confirmaré disponibilidad, precio y los detalles necesarios antes de reservar.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  name: "Lua Lashes by Sey",
+  description: "Servicio de extensiones de pestañas con diseños personalizados, clásicas, híbridas, volumen y retoques.",
+  sameAs: [bookingUrl],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Servicios de pestañas",
+    itemListElement: services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.title,
+        description: service.copy,
+      },
+    })),
+  },
+};
 
 export default function Home() {
   return (
-    <main>
-      <header className="site-header">
+    <>
+      <a className="skip-link" href="#contenido">Saltar al contenido</a>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
+      <main id="contenido" tabIndex={-1}>
+        <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Lua Lashes, inicio">
           <span>LUA</span>
           <small>Lashes by Sey</small>
@@ -47,12 +91,13 @@ export default function Home() {
         <nav aria-label="Navegación principal">
           <a href="#servicios">Servicios</a>
           <a href="#trabajo">Mi trabajo</a>
+          <a href="#preguntas">Preguntas</a>
           <a href="#citas">Citas</a>
         </nav>
-        <a className="header-cta" href={bookingUrl} target="_blank" rel="noreferrer">
+        <a className="header-cta" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Reservar por Instagram (se abre en una pestaña nueva)">
           Reservar <span aria-hidden="true">↗</span>
         </a>
-      </header>
+        </header>
 
       <section className="hero" id="top">
         <div className="hero-copy">
@@ -113,7 +158,7 @@ export default function Home() {
               </div>
               <div className="service-meta">
                 <span>{service.time}</span>
-                <a href={bookingUrl} target="_blank" rel="noreferrer" aria-label={`Consultar ${service.title} en Instagram`}>↗</a>
+                <a href={bookingUrl} target="_blank" rel="noreferrer" aria-label={`Consultar ${service.title} en Instagram (se abre en una pestaña nueva)`}>↗</a>
               </div>
             </article>
           ))}
@@ -128,13 +173,13 @@ export default function Home() {
         </div>
         <div className="work-grid">
           {work.map((item, index) => (
-            <figure className={item.className} key={`${item.className}-${index}`}>
-              <Image src={item.src} alt={item.alt} fill sizes="(max-width: 700px) 100vw, 50vw" />
+            <figure className={item.className} key={item.src}>
+              <Image src={item.src} alt={item.alt} fill sizes="(max-width: 700px) 88vw, 50vw" quality={78} />
               <figcaption>0{index + 1} / Lua Lashes</figcaption>
             </figure>
           ))}
         </div>
-        <a className="instagram-link" href={bookingUrl} target="_blank" rel="noreferrer">
+        <a className="instagram-link" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Ver más trabajos en Instagram (se abre en una pestaña nueva)">
           Más trabajos en @lualashes_by_sey <span aria-hidden="true">↗</span>
         </a>
       </section>
@@ -158,6 +203,25 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="faq section" id="preguntas">
+        <div className="faq-intro">
+          <p className="eyebrow"><span /> Antes de reservar</p>
+          <h2>Resuelve tus<br /><em>preguntas.</em></h2>
+          <p>La información esencial para que llegues a tu cita con tranquilidad y sepas qué esperar.</p>
+        </div>
+        <div className="faq-list">
+          {faqs.map((faq, index) => (
+            <details key={faq.question} open={index === 0}>
+              <summary>
+                <span>{faq.question}</span>
+                <span className="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       <section className="booking section" id="citas">
         <div className="booking-copy">
           <p className="eyebrow eyebrow-light"><span /> Reserva</p>
@@ -165,8 +229,8 @@ export default function Home() {
           <p>
             Escríbeme por Instagram para elegir tu servicio, consultar disponibilidad y confirmar tu cita.
           </p>
-          <a className="button button-light" href={bookingUrl} target="_blank" rel="noreferrer">
-            Reservar por Instagram <span aria-hidden="true">↗</span>
+          <a className="button button-light" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Enviar mensaje por Instagram para reservar (se abre en una pestaña nueva)">
+            Enviar mensaje por Instagram <span aria-hidden="true">↗</span>
           </a>
         </div>
         <div className="booking-card">
@@ -188,16 +252,18 @@ export default function Home() {
         <div className="footer-links">
           <a href="#servicios">Servicios</a>
           <a href="#trabajo">Mi trabajo</a>
+          <a href="#preguntas">Preguntas</a>
           <a href="#citas">Reservar</a>
-          <a href={bookingUrl} target="_blank" rel="noreferrer">Instagram ↗</a>
+          <a href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Visitar Instagram (se abre en una pestaña nueva)">Instagram ↗</a>
         </div>
         <p>Atención únicamente con cita previa.</p>
         <p className="copyright">© {new Date().getFullYear()} Lua Lashes by Sey</p>
       </footer>
 
-      <a className="mobile-book" href={bookingUrl} target="_blank" rel="noreferrer">
+      <a className="mobile-book" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Agendar cita por Instagram (se abre en una pestaña nueva)">
         Agendar cita <span aria-hidden="true">↗</span>
       </a>
-    </main>
+      </main>
+    </>
   );
 }
