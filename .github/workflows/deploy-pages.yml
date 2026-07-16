@@ -30,6 +30,7 @@ jobs:
       - name: Build static site
         env:
           NEXT_PUBLIC_SITE_URL: https://glennndevv.github.io/lua-lashes-by-sey
+          NEXT_PUBLIC_CAL_USERNAME: ${{ vars.NEXT_PUBLIC_CAL_USERNAME }}
         run: npm run build:pages
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -54,7 +54,10 @@ test("renders accessible conversion and service content", async () => {
   assert.match(html, /Volumen/);
   assert.match(html, /Retoques/);
   assert.match(html, /Resuelve tus[\s\S]*preguntas\./i);
-  assert.match(html, /Enviar mensaje por Instagram/i);
+  assert.match(html, /¿Qué estilo buscas\?/i);
+  assert.match(html, /disponibilidad es orientativa/i);
+  assert.match(html, /Mar–Sáb/i);
+  assert.match(html, /Elegir cita/i);
   assert.match(html, /aria-label="Abrir menú"/i);
   assert.match(html, /lash-detail-480\.webp 480w/i);
   assert.match(html, /application\/ld\+json/i);

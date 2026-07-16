@@ -1,6 +1,9 @@
 import { MobileNav } from "./mobile-nav";
+import { BookingExperience, type BookingService } from "./booking-experience";
+import { MobileBookingCta } from "./mobile-booking-cta";
 
 const bookingUrl = "https://www.instagram.com/lualashes_by_sey/";
+const calUsername = process.env.NEXT_PUBLIC_CAL_USERNAME?.trim();
 const basePath = process.env.GITHUB_PAGES === "true" ? "/lua-lashes-by-sey" : "";
 const asset = (path: string) => `${basePath}${path}`;
 const imageSrcSet = (name: string, widths: number[]) => (
@@ -39,30 +42,51 @@ function ResponsiveImage({ alt, fallback, height, name, priority = false, sizes,
 
 const services = [
   {
+    id: "clasicas",
     number: "01",
     title: "Clásicas",
     copy: "Una extensión por pestaña natural para un acabado limpio, sutil y elegante.",
     time: "2 h aprox.",
+    calSlug: "clasicas",
+    slots: ["09:00", "11:30", "14:00", "16:00"],
   },
   {
+    id: "hibridas",
     number: "02",
     title: "Híbridas",
     copy: "El equilibrio perfecto entre definición y volumen, diseñado para tu mirada.",
     time: "2 h 15 min aprox.",
+    calSlug: "hibridas",
+    slots: ["09:00", "12:00", "15:15"],
   },
   {
+    id: "volumen",
     number: "03",
     title: "Volumen",
     copy: "Abanicos ligeros y personalizados para una mirada intensa sin perder comodidad.",
     time: "2 h 30 min aprox.",
+    calSlug: "volumen",
+    slots: ["09:00", "12:15", "15:00"],
   },
   {
+    id: "retoques",
     number: "04",
     title: "Retoques",
     copy: "Mantenimiento para conservar la forma, densidad y frescura de tu set.",
     time: "Desde 1 h 15 min",
+    calSlug: "retoques",
+    slots: ["09:00", "10:45", "12:30", "14:45", "16:30"],
   },
 ];
+
+const bookingServices: BookingService[] = services.map((service) => ({
+  id: service.id,
+  title: service.title,
+  duration: service.time,
+  description: service.copy,
+  calSlug: service.calSlug,
+  slots: service.slots,
+}));
 
 const work = [
   { name: "lash-closeup", fallback: "/lash-closeup.jpg", widths: [480, 800, 1200], width: 1200, height: 1800, alt: "Detalle de pestañas largas y definidas", className: "work-tall work-one" },
@@ -194,7 +218,7 @@ export default function Home() {
               </div>
               <div className="service-meta">
                 <span>{service.time}</span>
-                <a href={bookingUrl} target="_blank" rel="noreferrer" aria-label={`Consultar ${service.title} en Instagram (se abre en una pestaña nueva)`}>↗</a>
+                <a href="#citas" aria-label={`Elegir una cita de ${service.title}`}>↘</a>
               </div>
             </article>
           ))}
@@ -279,21 +303,15 @@ export default function Home() {
           <p className="eyebrow eyebrow-light"><span /> Reserva</p>
           <h2>Tu próxima mirada<br />empieza <em>aquí.</em></h2>
           <p>
-            Escríbeme por Instagram para elegir tu servicio, consultar disponibilidad y confirmar tu cita.
+            Elige servicio, fecha y hora en un mismo lugar. Mientras conectamos la agenda definitiva, la disponibilidad es orientativa y se confirma personalmente por Instagram.
           </p>
-          <a className="button button-light" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Enviar mensaje por Instagram para reservar (se abre en una pestaña nueva)">
-            Enviar mensaje por Instagram <span aria-hidden="true">↗</span>
-          </a>
+          <div className="booking-facts" aria-label="Configuración inicial de las citas">
+            <span><strong>Mar–Sáb</strong> Días de atención</span>
+            <span><strong>9:00–18:00</strong> Horario inicial</span>
+            <span><strong>24 h</strong> Anticipación mínima</span>
+          </div>
         </div>
-        <div className="booking-card">
-          <p className="card-kicker">Antes de tu cita</p>
-          <ol>
-            <li><span>1</span><div><strong>Elige tu estilo</strong><p>Cuéntame el resultado que buscas o envíame una referencia.</p></div></li>
-            <li><span>2</span><div><strong>Consulta disponibilidad</strong><p>Coordinamos el día y la hora que mejor te funcionen.</p></div></li>
-            <li><span>3</span><div><strong>Confirma tu espacio</strong><p>Recibirás los detalles y recomendaciones para tu visita.</p></div></li>
-          </ol>
-          <p className="clean-note">Ven sin máscara de pestañas y con el área de los ojos limpia.</p>
-        </div>
+        <BookingExperience services={bookingServices} instagramUrl={bookingUrl} calUsername={calUsername} />
       </section>
 
       <footer>
@@ -312,9 +330,7 @@ export default function Home() {
         <p className="copyright">© {new Date().getFullYear()} Lua Lashes by Sey</p>
       </footer>
 
-      <a className="mobile-book" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Agendar cita por Instagram (se abre en una pestaña nueva)">
-        Agendar cita <span aria-hidden="true">↗</span>
-      </a>
+      <MobileBookingCta />
       </main>
     </>
   );
