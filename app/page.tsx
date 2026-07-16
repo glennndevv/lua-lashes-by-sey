@@ -129,10 +129,7 @@ export default function Home() {
           <a href="#preguntas">Preguntas</a>
           <a href="#citas">Citas</a>
         </nav>
-        <MobileNav bookingUrl={bookingUrl} />
-        <a className="header-cta" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Reservar por Instagram (se abre en una pestaña nueva)">
-          Reservar <span aria-hidden="true">↗</span>
-        </a>
+        <MobileNav />
         </header>
 
       <section className="hero" id="top">

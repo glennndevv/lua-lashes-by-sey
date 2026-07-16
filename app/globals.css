@@ -75,8 +75,6 @@ main:focus { outline: none; }
 .site-header > nav a { position: relative; }
 .site-header > nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -8px; height: 1px; background: var(--ink); transition: right .25s ease; }
 .site-header > nav a:hover::after { right: 0; }
-.header-cta { min-height: 44px; justify-self: end; border-bottom: 1px solid var(--ink); padding: 8px 0; display: flex; align-items: center; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
-.header-cta span { margin-left: 12px; }
 .mobile-nav { display: none; }
 
 .hero { min-height: calc(100vh - 94px); display: grid; grid-template-columns: 53% 47%; background: var(--cream); overflow: hidden; }
@@ -194,7 +192,7 @@ footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font
 @media (max-width: 900px) {
   html { scroll-padding-top: 102px; }
   .section { scroll-margin-top: 102px; }
-  .site-header { position: sticky; z-index: 40; top: 0; grid-template-columns: 1fr auto auto; gap: 8px; height: 82px; }
+  .site-header { position: sticky; z-index: 40; top: 0; grid-template-columns: 1fr auto; gap: 12px; height: 82px; }
   .site-header > nav { display: none; }
   .mobile-nav { display: block; }
   .mobile-nav-trigger { width: 48px; height: 44px; padding: 4px; border: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: transparent; color: var(--ink); cursor: pointer; }
@@ -211,7 +209,6 @@ footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font
   .mobile-nav-overlay nav a { min-height: 64px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 14px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(29px, 9vw, 42px); line-height: 1; }
   .mobile-nav-overlay nav a > span:first-child { color: var(--rose); font-family: var(--font-geist), sans-serif; font-size: 10px; }
   .mobile-nav-overlay nav a > span:last-child { font-family: var(--font-geist), sans-serif; font-size: 17px; }
-  .mobile-nav-booking { min-height: 56px; margin-top: auto; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; background: var(--ink); color: white; font-size: 11px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
   .hero { grid-template-columns: 1fr; }
   .hero-copy { min-height: 660px; padding: 74px 7vw 46px; }
   .hero-visual { min-height: 72vh; }
@@ -229,7 +226,6 @@ footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font
 @media (max-width: 620px) {
   body { padding-bottom: 63px; }
   .site-header { padding: 0 6vw; }
-  .header-cta { font-size: 11px; white-space: nowrap; }
   .wordmark span { font-size: 26px; }
   .hero-copy { min-height: 610px; padding-top: 64px; }
   .hero h1 { font-size: clamp(59px, 20vw, 86px); }

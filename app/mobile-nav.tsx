@@ -9,7 +9,7 @@ const links = [
   { href: "#citas", label: "Citas" },
 ];
 
-export function MobileNav({ bookingUrl }: { bookingUrl: string }) {
+export function MobileNav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -69,16 +69,6 @@ export function MobileNav({ bookingUrl }: { bookingUrl: string }) {
               </a>
             ))}
           </nav>
-
-          <a
-            className="mobile-nav-booking"
-            href={bookingUrl}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setOpen(false)}
-          >
-            Reservar por Instagram <span aria-hidden="true">↗</span>
-          </a>
         </div>
       ) : null}
     </div>
