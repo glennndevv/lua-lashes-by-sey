@@ -1,6 +1,8 @@
 import Image from "next/image";
 
 const bookingUrl = "https://www.instagram.com/lualashes_by_sey/";
+const basePath = process.env.GITHUB_PAGES === "true" ? "/lua-lashes-by-sey" : "";
+const asset = (path: string) => `${basePath}${path}`;
 
 const services = [
   {
@@ -30,9 +32,9 @@ const services = [
 ];
 
 const work = [
-  { src: "/lash-closeup.jpg", alt: "Detalle de pestañas largas y definidas", className: "work-tall work-one" },
-  { src: "/lash-application.jpg", alt: "Aplicación profesional de extensiones de pestañas", className: "work-wide work-two" },
-  { src: "/lash-detail.jpg", alt: "Primer plano de una mirada con pestañas", className: "work-small work-three" },
+  { src: asset("/lash-closeup.jpg"), alt: "Detalle de pestañas largas y definidas", className: "work-tall work-one" },
+  { src: asset("/lash-application.jpg"), alt: "Aplicación profesional de extensiones de pestañas", className: "work-wide work-two" },
+  { src: asset("/lash-detail.jpg"), alt: "Primer plano de una mirada con pestañas", className: "work-small work-three" },
 ];
 
 const faqs = [
@@ -119,7 +121,7 @@ export default function Home() {
 
         <div className="hero-visual">
           <Image
-            src="/lash-detail.jpg"
+            src={asset("/lash-detail.jpg")}
             alt="Mirada con pestañas largas y definidas"
             fill
             priority
@@ -186,7 +188,7 @@ export default function Home() {
 
       <section className="experience section">
         <div className="experience-image">
-          <Image src="/lash-application.jpg" alt="Proceso cuidadoso de aplicación de pestañas" fill sizes="(max-width: 800px) 100vw, 50vw" />
+          <Image src={asset("/lash-application.jpg")} alt="Proceso cuidadoso de aplicación de pestañas" fill sizes="(max-width: 800px) 100vw, 50vw" />
           <div className="image-stamp">BEAUTY<br />IN EVERY<br />DETAIL</div>
         </div>
         <div className="experience-copy">

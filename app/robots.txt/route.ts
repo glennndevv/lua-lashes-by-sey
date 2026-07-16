@@ -1,10 +1,12 @@
+export const dynamic = "force-static";
+
 export function GET(request: Request) {
-  const origin = new URL(request.url).origin;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? new URL(request.url).origin;
   const body = [
     "User-agent: *",
     "Allow: /",
     "",
-    `Sitemap: ${origin}/sitemap.xml`,
+    `Sitemap: ${siteUrl.replace(/\/$/, "")}/sitemap.xml`,
     "",
   ].join("\n");
 

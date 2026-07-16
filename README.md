@@ -1,5 +1,13 @@
 # Lua Lashes by Sey
 
+Sitio web de Lua Lashes by Sey, publicado en GitHub Pages.
+
+## Despliegue
+
+Cada push a `main` genera una exportación estática de Next.js y la publica mediante GitHub Actions en:
+
+<https://glennndevv.github.io/lua-lashes-by-sey/>
+
 Landing page para los servicios de extensiones de pestañas de Lua Lashes by Sey. Presenta servicios, duraciones aproximadas, galería, experiencia, preguntas frecuentes y un flujo de reserva por Instagram.
 
 ## Desarrollo local
