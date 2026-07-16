@@ -16,10 +16,16 @@ export function MobileNav() {
     if (!open) return;
 
     const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
     document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", closeOnEscape);
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
     };
   }, [open]);
 
@@ -48,29 +54,31 @@ export function MobileNav() {
         <span className="mobile-nav-label">Menú</span>
       </button>
 
-      {open ? (
-        <div className="mobile-nav-overlay" id="mobile-navigation">
-          <div className="mobile-nav-topline">
-            <div className="mobile-nav-brand" aria-hidden="true">
-              <span>LUA</span>
-              <small>Lashes by Sey</small>
-            </div>
-            <button type="button" className="mobile-nav-close" onClick={() => setOpen(false)}>
-              Cerrar <span aria-hidden="true">×</span>
-            </button>
+      <div
+        className={`mobile-nav-overlay${open ? " is-open" : ""}`}
+        id="mobile-navigation"
+        aria-hidden={!open}
+      >
+        <div className="mobile-nav-topline">
+          <div className="wordmark mobile-nav-brand" aria-hidden="true">
+            <span>LUA</span>
+            <small>Lashes by Sey</small>
           </div>
-
-          <nav aria-label="Navegación móvil">
-            {links.map((link, index) => (
-              <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
-                <span>0{index + 1}</span>
-                {link.label}
-                <span aria-hidden="true">→</span>
-              </a>
-            ))}
-          </nav>
+          <button type="button" className="mobile-nav-close" onClick={() => setOpen(false)}>
+            Cerrar <span aria-hidden="true">×</span>
+          </button>
         </div>
-      ) : null}
+
+        <nav aria-label="Navegación móvil">
+          {links.map((link, index) => (
+            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              <span>0{index + 1}</span>
+              {link.label}
+              <span aria-hidden="true">→</span>
+            </a>
+          ))}
+        </nav>
+      </div>
     </div>
   );
 }

@@ -198,15 +198,20 @@ footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font
   .mobile-nav-trigger { width: 48px; height: 44px; padding: 4px; border: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: transparent; color: var(--ink); cursor: pointer; }
   .mobile-nav-trigger > span:not(.mobile-nav-label) { width: 20px; height: 1px; background: currentColor; }
   .mobile-nav-label { font-size: 9px; line-height: 1; letter-spacing: .12em; text-transform: uppercase; }
-  .mobile-nav-overlay { position: fixed; z-index: 80; inset: 0; padding: 22px 7vw max(28px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; background: var(--cream); color: var(--ink); }
-  .mobile-nav-topline { display: flex; align-items: center; justify-content: space-between; min-height: 50px; }
-  .mobile-nav-brand { display: flex; flex-direction: column; font-family: Georgia, "Times New Roman", serif; line-height: .84; }
-  .mobile-nav-brand > span { font-size: 29px; letter-spacing: .22em; }
-  .mobile-nav-brand small { margin-top: 7px; font-family: var(--font-geist), sans-serif; font-size: 9px; letter-spacing: .3em; text-transform: uppercase; }
+  .mobile-nav-overlay { position: fixed; z-index: 80; inset: 0; padding: 22px 4.5vw max(28px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; visibility: hidden; pointer-events: none; opacity: 0; transform: translate3d(0, -18px, 0); background: var(--cream); color: var(--ink); transition: opacity .24s ease, transform .36s cubic-bezier(.22, 1, .36, 1), visibility 0s linear .36s; will-change: opacity, transform; }
+  .mobile-nav-overlay.is-open { visibility: visible; pointer-events: auto; opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 0s; }
+  .mobile-nav-topline { min-height: 50px; display: flex; align-items: center; justify-content: space-between; opacity: 0; transform: translateY(-8px); transition: opacity .2s ease, transform .28s cubic-bezier(.22, 1, .36, 1); }
+  .mobile-nav-overlay.is-open .mobile-nav-topline { opacity: 1; transform: translateY(0); transition-delay: .07s; }
+  .mobile-nav-brand { min-height: 44px; justify-content: center; }
   .mobile-nav-close { min-width: 82px; min-height: 44px; padding: 0; border: 0; border-bottom: 1px solid var(--ink); display: flex; align-items: center; justify-content: space-between; background: transparent; color: var(--ink); font: inherit; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; cursor: pointer; }
   .mobile-nav-close span { font-family: Georgia, serif; font-size: 23px; font-weight: 400; }
   .mobile-nav-overlay nav { margin: 34px 0 28px; border-top: 1px solid var(--line); }
-  .mobile-nav-overlay nav a { min-height: 64px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 14px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(29px, 9vw, 42px); line-height: 1; }
+  .mobile-nav-overlay nav a { min-height: 64px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 14px; opacity: 0; transform: translateY(12px); font-family: Georgia, "Times New Roman", serif; font-size: clamp(29px, 9vw, 42px); line-height: 1; transition: opacity .18s ease, transform .28s cubic-bezier(.22, 1, .36, 1); }
+  .mobile-nav-overlay.is-open nav a { opacity: 1; transform: translateY(0); }
+  .mobile-nav-overlay.is-open nav a:nth-child(1) { transition-delay: .09s; }
+  .mobile-nav-overlay.is-open nav a:nth-child(2) { transition-delay: .13s; }
+  .mobile-nav-overlay.is-open nav a:nth-child(3) { transition-delay: .17s; }
+  .mobile-nav-overlay.is-open nav a:nth-child(4) { transition-delay: .21s; }
   .mobile-nav-overlay nav a > span:first-child { color: var(--rose); font-family: var(--font-geist), sans-serif; font-size: 10px; }
   .mobile-nav-overlay nav a > span:last-child { font-family: var(--font-geist), sans-serif; font-size: 17px; }
   .hero { grid-template-columns: 1fr; }
@@ -226,6 +231,7 @@ footer > p { margin: 45px 0 0; color: #a79d96; font-family: Georgia, serif; font
 @media (max-width: 620px) {
   body { padding-bottom: 63px; }
   .site-header { padding: 0 6vw; }
+  .mobile-nav-overlay { padding-left: 6vw; padding-right: 6vw; }
   .wordmark span { font-size: 26px; }
   .hero-copy { min-height: 610px; padding-top: 64px; }
   .hero h1 { font-size: clamp(59px, 20vw, 86px); }
