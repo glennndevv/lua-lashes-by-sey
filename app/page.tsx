@@ -1,8 +1,41 @@
-import Image from "next/image";
+import { MobileNav } from "./mobile-nav";
 
 const bookingUrl = "https://www.instagram.com/lualashes_by_sey/";
 const basePath = process.env.GITHUB_PAGES === "true" ? "/lua-lashes-by-sey" : "";
 const asset = (path: string) => `${basePath}${path}`;
+const imageSrcSet = (name: string, widths: number[]) => (
+  widths.map((width) => `${asset(`/${name}-${width}.webp`)} ${width}w`).join(", ")
+);
+
+type ResponsiveImageProps = {
+  alt: string;
+  fallback: string;
+  height: number;
+  name: string;
+  priority?: boolean;
+  sizes: string;
+  width: number;
+  widths: number[];
+};
+
+function ResponsiveImage({ alt, fallback, height, name, priority = false, sizes, width, widths }: ResponsiveImageProps) {
+  return (
+    <picture>
+      <source type="image/webp" srcSet={imageSrcSet(name, widths)} sizes={sizes} />
+      <img
+        className="media-fill"
+        src={asset(fallback)}
+        alt={alt}
+        width={width}
+        height={height}
+        sizes={sizes}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
+      />
+    </picture>
+  );
+}
 
 const services = [
   {
@@ -32,9 +65,9 @@ const services = [
 ];
 
 const work = [
-  { src: asset("/lash-closeup.jpg"), alt: "Detalle de pestañas largas y definidas", className: "work-tall work-one" },
-  { src: asset("/lash-application.jpg"), alt: "Aplicación profesional de extensiones de pestañas", className: "work-wide work-two" },
-  { src: asset("/lash-detail.jpg"), alt: "Primer plano de una mirada con pestañas", className: "work-small work-three" },
+  { name: "lash-closeup", fallback: "/lash-closeup.jpg", widths: [480, 800, 1200], width: 1200, height: 1800, alt: "Detalle de pestañas largas y definidas", className: "work-tall work-one" },
+  { name: "lash-application", fallback: "/lash-application.jpg", widths: [640, 1000, 1600], width: 1800, height: 1200, alt: "Aplicación profesional de extensiones de pestañas", className: "work-wide work-two" },
+  { name: "lash-detail", fallback: "/lash-detail.jpg", widths: [480, 800, 1215], width: 1215, height: 1800, alt: "Primer plano de una mirada con pestañas", className: "work-small work-three" },
 ];
 
 const faqs = [
@@ -96,6 +129,7 @@ export default function Home() {
           <a href="#preguntas">Preguntas</a>
           <a href="#citas">Citas</a>
         </nav>
+        <MobileNav bookingUrl={bookingUrl} />
         <a className="header-cta" href={bookingUrl} target="_blank" rel="noreferrer" aria-label="Reservar por Instagram (se abre en una pestaña nueva)">
           Reservar <span aria-hidden="true">↗</span>
         </a>
@@ -120,10 +154,13 @@ export default function Home() {
         </div>
 
         <div className="hero-visual">
-          <Image
-            src={asset("/lash-detail.jpg")}
+          <ResponsiveImage
+            name="lash-detail"
+            fallback="/lash-detail.jpg"
             alt="Mirada con pestañas largas y definidas"
-            fill
+            width={1215}
+            height={1800}
+            widths={[480, 800, 1215]}
             priority
             sizes="(max-width: 800px) 100vw, 48vw"
           />
@@ -175,8 +212,16 @@ export default function Home() {
         </div>
         <div className="work-grid">
           {work.map((item, index) => (
-            <figure className={item.className} key={item.src}>
-              <Image src={item.src} alt={item.alt} fill sizes="(max-width: 700px) 88vw, 50vw" quality={78} />
+            <figure className={item.className} key={item.name}>
+              <ResponsiveImage
+                name={item.name}
+                fallback={item.fallback}
+                widths={item.widths}
+                width={item.width}
+                height={item.height}
+                alt={item.alt}
+                sizes="(max-width: 700px) 88vw, 50vw"
+              />
               <figcaption>0{index + 1} / Lua Lashes</figcaption>
             </figure>
           ))}
@@ -188,7 +233,15 @@ export default function Home() {
 
       <section className="experience section">
         <div className="experience-image">
-          <Image src={asset("/lash-application.jpg")} alt="Proceso cuidadoso de aplicación de pestañas" fill sizes="(max-width: 800px) 100vw, 50vw" />
+          <ResponsiveImage
+            name="lash-application"
+            fallback="/lash-application.jpg"
+            widths={[640, 1000, 1600]}
+            width={1800}
+            height={1200}
+            alt="Proceso cuidadoso de aplicación de pestañas"
+            sizes="(max-width: 800px) 100vw, 50vw"
+          />
           <div className="image-stamp">BEAUTY<br />IN EVERY<br />DETAIL</div>
         </div>
         <div className="experience-copy">

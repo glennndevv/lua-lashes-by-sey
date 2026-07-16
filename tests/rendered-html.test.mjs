@@ -55,6 +55,8 @@ test("renders accessible conversion and service content", async () => {
   assert.match(html, /Retoques/);
   assert.match(html, /Resuelve tus[\s\S]*preguntas\./i);
   assert.match(html, /Enviar mensaje por Instagram/i);
+  assert.match(html, /aria-label="Abrir menú"/i);
+  assert.match(html, /lash-detail-480\.webp 480w/i);
   assert.match(html, /application\/ld\+json/i);
   assert.match(html, /BeautySalon/);
   assert.match(html, /se abre en una pestaña nueva/i);
